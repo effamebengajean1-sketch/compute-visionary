@@ -37,6 +37,7 @@ export function AutomatonGraph({
   const onSelectRef = useRef(onSelectState);
   onMoveRef.current = onMoveState;
   onSelectRef.current = onSelectState;
+  const prevIdRef = useRef<string | null>(null);
 
   // Initialisation unique de Cytoscape (client uniquement).
   useEffect(() => {
