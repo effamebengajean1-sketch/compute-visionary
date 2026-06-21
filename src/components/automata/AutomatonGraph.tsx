@@ -167,6 +167,11 @@ export function AutomatonGraph({
     const cy = cyRef.current;
     if (!cy) return;
     renderElements(cy, automaton);
+    // Recentrer uniquement lors d'un changement d'automate (pas à chaque édition).
+    if (prevIdRef.current !== automaton.id) {
+      prevIdRef.current = automaton.id;
+      cy.fit(undefined, 60);
+    }
   }, [automaton]);
 
   // Sélection.
