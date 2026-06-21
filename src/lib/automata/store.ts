@@ -29,6 +29,7 @@ export interface ResultData {
   message: string;
   steps: string[];
   recognition?: RecognitionResult;
+  automaton?: Automaton;
 }
 
 interface AutomataState {
