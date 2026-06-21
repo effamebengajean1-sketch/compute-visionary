@@ -187,17 +187,20 @@ export function AutomatonGraph({
   }, [highlightStates]);
 
   useEffect(() => {
-    if (!registerExport) return;
-    registerExport(() => {
-      const cy = cyRef.current;
-      if (!cy) return;
-      const png = cy.png({ full: true, scale: 2, bg: "#ffffff" });
-      const link = document.createElement("a");
-      link.href = png;
-      link.download = `${automaton.name.replace(/\s+/g, "_") || "automate"}.png`;
-      link.click();
+    if (!registerActions) return;
+    registerActions({
+      exportPng: () => {
+        const cy = cyRef.current;
+        if (!cy) return;
+        const png = cy.png({ full: true, scale: 2, bg: "#ffffff" });
+        const link = document.createElement("a");
+        link.href = png;
+        link.download = `${automaton.name.replace(/\s+/g, "_") || "automate"}.png`;
+        link.click();
+      },
+      fit: () => cyRef.current?.fit(undefined, 60),
     });
-  }, [registerExport, automaton.name]);
+  }, [registerActions, automaton.name]);
 
   return <div ref={containerRef} className="h-full w-full" />;
 }
