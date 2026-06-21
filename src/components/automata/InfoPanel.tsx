@@ -1,8 +1,7 @@
 // CompilLab — Panneau d'informations (toujours visible).
 import { useMemo } from "react";
-import { Automaton, getProperties } from "@/lib/automata/types";
+import { Automaton, getProperties, isDeterministic } from "@/lib/automata/types";
 import { minimize } from "@/lib/automata/algorithms";
-import { isDeterministic } from "@/lib/automata/types";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, XCircle } from "lucide-react";
 
