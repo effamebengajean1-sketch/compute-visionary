@@ -21,7 +21,6 @@ import {
   BookOpen,
   Copy,
   RotateCcw,
-  Save,
   LayoutGrid,
   Maximize,
 } from "lucide-react";
