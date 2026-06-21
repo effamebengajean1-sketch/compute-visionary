@@ -118,9 +118,6 @@ export function AutomatonToolbar({ onExportPng, onFit }: Props) {
       <Button size="sm" variant="ghost" onClick={duplicate}>
         <Copy className="h-4 w-4" /> Dupliquer
       </Button>
-      <Button size="sm" variant="ghost" onClick={() => toast.error("Bibliothèque : utilisez Exporter JSON pour sauvegarder.")} className="hidden">
-        <Save className="h-4 w-4" /> Sauver
-      </Button>
       <Button size="sm" variant="ghost" className="text-destructive" onClick={reset}>
         <RotateCcw className="h-4 w-4" /> Réinitialiser
       </Button>
