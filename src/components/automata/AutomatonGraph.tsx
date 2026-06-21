@@ -20,7 +20,7 @@ interface Props {
   highlightStates: string[];
   onSelectState: (id: string | null) => void;
   onMoveState: (id: string, x: number, y: number) => void;
-  registerExport?: (fn: () => void) => void;
+  registerActions?: (actions: { exportPng: () => void; fit: () => void }) => void;
 }
 
 export function AutomatonGraph({
@@ -29,7 +29,7 @@ export function AutomatonGraph({
   highlightStates,
   onSelectState,
   onMoveState,
-  registerExport,
+  registerActions,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cyRef = useRef<Core | null>(null);
