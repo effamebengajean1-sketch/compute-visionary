@@ -33,6 +33,7 @@ export function AutomatonGraph({
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cyRef = useRef<Core | null>(null);
+  const roRef = useRef<ResizeObserver | null>(null);
   const onMoveRef = useRef(onMoveState);
   const onSelectRef = useRef(onSelectState);
   onMoveRef.current = onMoveState;
@@ -154,9 +155,24 @@ export function AutomatonGraph({
       cyRef.current = cy;
       renderElements(cy, automaton);
       cy.fit(undefined, 60);
+
+      // Le conteneur peut être mesuré à 0px lors d'un montage différé
+      // (graphe affiché après un clic). On recadre dès qu'une taille apparaît.
+      if (containerRef.current && typeof ResizeObserver !== "undefined") {
+        const ro = new ResizeObserver(() => {
+          const c = cyRef.current;
+          if (!c) return;
+          c.resize();
+          c.fit(undefined, 60);
+        });
+        ro.observe(containerRef.current);
+        roRef.current = ro;
+      }
     });
     return () => {
       cancelled = true;
+      roRef.current?.disconnect();
+      roRef.current = null;
       cyRef.current?.destroy();
       cyRef.current = null;
     };

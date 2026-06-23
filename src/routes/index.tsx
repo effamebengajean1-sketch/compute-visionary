@@ -9,6 +9,7 @@ import { InfoPanel } from "@/components/automata/InfoPanel";
 import { TransitionTable } from "@/components/automata/TransitionTable";
 import { ResultPanel } from "@/components/automata/ResultPanel";
 import { HistoryConsole } from "@/components/automata/HistoryConsole";
+import { ModuleNav } from "@/components/automata/ModuleNav";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toaster } from "@/components/ui/sonner";
 import { Workflow } from "lucide-react";
@@ -67,10 +68,13 @@ function Workspace() {
               <p className="text-xs text-muted-foreground">Atelier d'automates finis</p>
             </div>
           </div>
-          <AutomatonToolbar
-            onExportPng={() => actionsRef.current.exportPng()}
-            onFit={() => actionsRef.current.fit()}
-          />
+          <div className="flex flex-wrap items-center gap-3">
+            <ModuleNav />
+            <AutomatonToolbar
+              onExportPng={() => actionsRef.current.exportPng()}
+              onFit={() => actionsRef.current.fit()}
+            />
+          </div>
         </div>
       </header>
 
