@@ -97,7 +97,7 @@ function RegexModule() {
     if (!graph) return;
     setCurrent(graph, "Automate importé du module Regex");
     toast.success("Automate envoyé vers l'atelier d'automates.");
-    navigate({ to: "/" });
+    navigate({ to: "/atelier" });
   };
 
   const moveState = (id: string, x: number, y: number) =>
