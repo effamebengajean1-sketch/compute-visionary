@@ -57,11 +57,14 @@ function RegexModule() {
   }, [hydrate]);
 
 
-  const runBuild = (label: string, fn: () => RegexBuildResult) => {
+  const [meta, setMeta] = useState<{ method: string; pattern?: string } | null>(null);
+
+  const runBuild = (method: string, label: string, fn: () => RegexBuildResult) => {
     try {
       const r = fn();
       setResult(r);
       setGraph(r.automaton ?? null);
+      setMeta({ method, pattern });
       if (r.automaton) toast.success(label);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Expression invalide.");
@@ -72,8 +75,21 @@ function RegexModule() {
     const r = arden(workspace);
     setResult(r);
     setGraph(null);
+    setMeta({ method: "Arden" });
     if (r.regex) toast.success("Expression régulière calculée (Arden).");
     else toast.error(r.message);
+  };
+
+  const doExport = (kind: "json" | "pdf") => {
+    if (!result || !meta) return;
+    const payload = { method: meta.method, pattern: meta.pattern, result };
+    if (kind === "json") {
+      exportResultJson(payload);
+      toast.success("Résultat exporté en JSON.");
+    } else {
+      exportResultPdf(payload);
+      toast.success("Résultat exporté en PDF.");
+    }
   };
 
   const applyToWorkspace = () => {
