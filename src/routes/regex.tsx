@@ -158,10 +158,10 @@ function RegexModule() {
               Expression → Automate
             </SectionTitle>
             <div className="grid grid-cols-2 gap-2">
-              <Button variant="accent" onClick={() => runBuild("Construction de Thompson", () => thompson(pattern))}>
+              <Button variant="accent" onClick={() => runBuild("Thompson", "Construction de Thompson", () => thompson(pattern))}>
                 Thompson
               </Button>
-              <Button variant="accent" onClick={() => runBuild("Construction de Glushkov", () => glushkov(pattern))}>
+              <Button variant="accent" onClick={() => runBuild("Glushkov", "Construction de Glushkov", () => glushkov(pattern))}>
                 Glushkov
               </Button>
             </div>
