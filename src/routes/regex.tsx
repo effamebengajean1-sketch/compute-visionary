@@ -9,12 +9,13 @@ import {
   thompson,
 } from "@/lib/automata/regex";
 import { useAutomataStore } from "@/lib/automata/store";
+import { exportResultJson, exportResultPdf } from "@/lib/automata/exportResult";
 import { AutomatonGraph } from "@/components/automata/AutomatonGraph";
 import { ModuleNav } from "@/components/automata/ModuleNav";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Regex, Sparkles, Wand2, GitBranch, Workflow, Equal } from "lucide-react";
+import { Regex, Sparkles, Wand2, GitBranch, Workflow, Equal, FileJson, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 
