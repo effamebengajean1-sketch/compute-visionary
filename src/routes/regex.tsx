@@ -198,6 +198,17 @@ function RegexModule() {
                   <Wand2 className="h-3.5 w-3.5" /> Ouvrir dans l'atelier
                 </Button>
               )}
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <Button size="sm" variant="outline" onClick={() => doExport("json")}>
+                  <FileJson className="h-3.5 w-3.5" /> JSON
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => doExport("pdf")}>
+                  <FileText className="h-3.5 w-3.5" /> PDF
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Exporte le résultat (regex ou automate) et ses étapes pédagogiques.
+              </p>
             </section>
           )}
         </aside>
