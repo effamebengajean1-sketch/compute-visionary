@@ -9,12 +9,13 @@ import {
   thompson,
 } from "@/lib/automata/regex";
 import { useAutomataStore } from "@/lib/automata/store";
+import { exportResultJson, exportResultPdf } from "@/lib/automata/exportResult";
 import { AutomatonGraph } from "@/components/automata/AutomatonGraph";
 import { ModuleNav } from "@/components/automata/ModuleNav";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Regex, Sparkles, Wand2, GitBranch, Workflow, Equal } from "lucide-react";
+import { Regex, Sparkles, Wand2, GitBranch, Workflow, Equal, FileJson, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -57,11 +58,14 @@ function RegexModule() {
   }, [hydrate]);
 
 
-  const runBuild = (label: string, fn: () => RegexBuildResult) => {
+  const [meta, setMeta] = useState<{ method: string; pattern?: string } | null>(null);
+
+  const runBuild = (method: string, label: string, fn: () => RegexBuildResult) => {
     try {
       const r = fn();
       setResult(r);
       setGraph(r.automaton ?? null);
+      setMeta({ method, pattern });
       if (r.automaton) toast.success(label);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Expression invalide.");
@@ -72,15 +76,28 @@ function RegexModule() {
     const r = arden(workspace);
     setResult(r);
     setGraph(null);
+    setMeta({ method: "Arden" });
     if (r.regex) toast.success("Expression régulière calculée (Arden).");
     else toast.error(r.message);
+  };
+
+  const doExport = (kind: "json" | "pdf") => {
+    if (!result || !meta) return;
+    const payload = { method: meta.method, pattern: meta.pattern, result };
+    if (kind === "json") {
+      exportResultJson(payload);
+      toast.success("Résultat exporté en JSON.");
+    } else {
+      exportResultPdf(payload);
+      toast.success("Résultat exporté en PDF.");
+    }
   };
 
   const applyToWorkspace = () => {
     if (!graph) return;
     setCurrent(graph, "Automate importé du module Regex");
     toast.success("Automate envoyé vers l'atelier d'automates.");
-    navigate({ to: "/" });
+    navigate({ to: "/atelier" });
   };
 
   const moveState = (id: string, x: number, y: number) =>
@@ -142,10 +159,10 @@ function RegexModule() {
               Expression → Automate
             </SectionTitle>
             <div className="grid grid-cols-2 gap-2">
-              <Button variant="accent" onClick={() => runBuild("Construction de Thompson", () => thompson(pattern))}>
+              <Button variant="accent" onClick={() => runBuild("Thompson", "Construction de Thompson", () => thompson(pattern))}>
                 Thompson
               </Button>
-              <Button variant="accent" onClick={() => runBuild("Construction de Glushkov", () => glushkov(pattern))}>
+              <Button variant="accent" onClick={() => runBuild("Glushkov", "Construction de Glushkov", () => glushkov(pattern))}>
                 Glushkov
               </Button>
             </div>
@@ -181,6 +198,17 @@ function RegexModule() {
                   <Wand2 className="h-3.5 w-3.5" /> Ouvrir dans l'atelier
                 </Button>
               )}
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <Button size="sm" variant="outline" onClick={() => doExport("json")}>
+                  <FileJson className="h-3.5 w-3.5" /> JSON
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => doExport("pdf")}>
+                  <FileText className="h-3.5 w-3.5" /> PDF
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Exporte le résultat (regex ou automate) et ses étapes pédagogiques.
+              </p>
             </section>
           )}
         </aside>
