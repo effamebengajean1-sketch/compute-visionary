@@ -660,5 +660,14 @@ export function getRegexExamples(): { id: string; title: string; regex: string }
     { id: "a-star-b", title: "a*b* — des a puis des b", regex: "a*b*" },
     { id: "contains-ab", title: "(a|b)*ab(a|b)* — contient ab", regex: "(a|b)*ab(a|b)*" },
     { id: "optional", title: "a(ba)* — alternance", regex: "a(ba)*" },
+    { id: "aa-or-bb", title: "(aa|bb)(a|b)* — commence par aa ou bb", regex: "(aa|bb)(a|b)*" },
+    { id: "no-aa", title: "b*(ab*)* — sans deux a consécutifs", regex: "b*(ab*)*" },
+    { id: "even-block", title: "(ab|ba)* — blocs ab/ba", regex: "(ab|ba)*" },
+    { id: "abc", title: "(a|b|c)*abc — finit par abc (3 symboles)", regex: "(a|b|c)*abc" },
+    { id: "triple", title: "(a(a|b))* — a suivi de a ou b", regex: "(a(a|b))*" },
+    { id: "nested", title: "((a|b)(a|b))* — longueur paire", regex: "((a|b)(a|b))*" },
+    { id: "complex-1", title: "a*b*a*b* — 4 blocs alternés", regex: "a*b*a*b*" },
+    { id: "complex-2", title: "(a|ε)(ba)*b* — mot vide optionnel", regex: "(a|ε)(ba)*b*" },
+    { id: "complex-3", title: "((ab)*|(ba)*)c — grande union", regex: "((ab)*|(ba)*)c" },
   ];
 }
